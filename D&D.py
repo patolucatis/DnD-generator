@@ -1,4 +1,4 @@
-import random
+import secrets
 
 
 class Character:
@@ -15,10 +15,10 @@ class Character:
 
 
 def rolldices():
-    rolls = []
+    rolls = [0,0,0]
     i = 0
-    while (i < 4):
-        rolls[i] = random.randint(1,6)
+    while (i < 3):
+        rolls[i] = secrets.randbelow(6)+1
         i = i + 1
     minroll = 6
     suma = 0
@@ -50,7 +50,7 @@ def main():
     playclass_verify = False
     playclass = 0
     while not playclass_verify:
-        input_playclass = input("Input number >>")
+        input_playclass = input("Input class number >>")
         if not input_playclass:
             print("Come on, it's not that hard choosing a class!")
         else:
@@ -62,6 +62,54 @@ def main():
 
     if playclass == 1:
         c.playclass = "Barbarian"
+
+    print("Next step! It's time for the race, let's see what have you thought of.")
+    print("1. Human")
+    playrace_verify = False
+    playrace = 0
+    while not playrace_verify:
+        input_playrace = input("Input race number >>")
+        if not input_playrace:
+            print("Your character doesn't exist? It needs to be something!")
+        else:
+            playrace = int(input_playrace)
+            if playrace > 1 or playrace < 1:
+                print("We don't have that race yet, or it doesn't exist.")
+            else:
+                playrace_verify = True
+    
+    if playrace == 1:
+        c.race = "Human"
+
+    print("And now, it's time for the dice rolls! These will be fully automated, so just sit back and- oh, they're done already? Have a look!")
+    currentrolls = [[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]]
+    i = 0
+    while (i < 6):
+        currentrolls[0][i] = rolldices()
+        currentrolls[1][i] = rolldices()
+        currentrolls[2][i]= rolldices()
+        i += 1
+    
+    print(currentrolls[0])
+    print(currentrolls[1])
+    print(currentrolls[2])
+
+    print("So... Which one do you prefer?")
+    rollchoose_verify = False
+    rollchoose = 0
+    while not rollchoose_verify:
+        input_rollchoose = input("Input rolls number >>")
+        if not input_rollchoose:
+            print("Choose one, don't be shy.")
+        else:
+            rollchoose = int(input_rollchoose)
+            if rollchoose > 3 or rollchoose < 1:
+                print("Wrong choice! Please go again.")
+            else:
+                rollchoose_verify = True
+    
+    finalrolls = currentrolls[rollchoose-1]
+    print(finalrolls)
 
     c.sofar()
 
