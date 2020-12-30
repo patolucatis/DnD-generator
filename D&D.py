@@ -7,6 +7,13 @@ class Character:
     playclass = ""
     race = ""
 
+    strength = 0
+    dexterity = 0
+    constitution = 0
+    wisdom = 0
+    intelligence = 0
+    charisma = 0
+
     def __init__(self, player):
         self.player = player
 
@@ -33,6 +40,20 @@ def rolldices():
 def modifier(stat):
     return (stat - 10) / 2
 
+def getinput(amount):
+    verify = False
+    num = 0
+    while not verify:
+        inputter = input(">>")
+        if not inputter:
+            print("Error: empty input. Try again!")
+        else:
+            num = int(inputter)
+            if (num < 1 or num > amount):
+                print("Error: invalid input. Try again!")
+            else:
+                verify = True
+    return num
 
 def main():
     print("Welcome to the D&D Character creator V 0.1! Let's get started, shall we?")
@@ -47,36 +68,14 @@ def main():
 
     print("Good! Now that that's out of the way, let's go with your class. What do you want to play today?")
     print("1. Barbarian")
-    playclass_verify = False
-    playclass = 0
-    while not playclass_verify:
-        input_playclass = input("Input class number >>")
-        if not input_playclass:
-            print("Come on, it's not that hard choosing a class!")
-        else:
-            playclass = int(input_playclass)
-            if playclass > 1 or playclass < 1:
-                print("We don't have that class yet, or it doesn't exist.")
-            else:
-                playclass_verify = True
+    playclass = getinput(1)
 
     if playclass == 1:
         c.playclass = "Barbarian"
 
     print("Next step! It's time for the race, let's see what have you thought of.")
     print("1. Human")
-    playrace_verify = False
-    playrace = 0
-    while not playrace_verify:
-        input_playrace = input("Input race number >>")
-        if not input_playrace:
-            print("Your character doesn't exist? It needs to be something!")
-        else:
-            playrace = int(input_playrace)
-            if playrace > 1 or playrace < 1:
-                print("We don't have that race yet, or it doesn't exist.")
-            else:
-                playrace_verify = True
+    playrace = getinput(1)
     
     if playrace == 1:
         c.race = "Human"
@@ -95,18 +94,7 @@ def main():
     print(currentrolls[2])
 
     print("So... Which one do you prefer?")
-    rollchoose_verify = False
-    rollchoose = 0
-    while not rollchoose_verify:
-        input_rollchoose = input("Input rolls number >>")
-        if not input_rollchoose:
-            print("Choose one, don't be shy.")
-        else:
-            rollchoose = int(input_rollchoose)
-            if rollchoose > 3 or rollchoose < 1:
-                print("Wrong choice! Please go again.")
-            else:
-                rollchoose_verify = True
+    rollchoose = getinput(3)
     
     finalrolls = currentrolls[rollchoose-1]
     print(finalrolls)
